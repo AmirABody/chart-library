@@ -49,6 +49,17 @@ function parseArgumentsIntoOptions(rawArgs) {
     });
 
   program
+    .command("create-pdf")
+    .alias("P")
+    .description("Create PDF")
+    .action((options, command) => {
+      output = {
+        command: command.name(),
+        ...options,
+      };
+    });
+
+  program
     .command("test")
     .alias("T")
     .description("You can test commands of the cli.")
@@ -87,6 +98,12 @@ function cli(args) {
       const test = require("./cli-commands/test");
       test(options)
         .then(() => console.log("0 (Success): Draw Command Tested Completely!"))
+        .catch((err) => console.error(err));
+      break;
+    case "create-pdf":
+      const createPDF = require('./cli-commands/createPDF');
+      createPDF(options)
+        .then(() => console.log("0 (Success): PDF Successfully Created!"))
         .catch((err) => console.error(err));
       break;
   }
